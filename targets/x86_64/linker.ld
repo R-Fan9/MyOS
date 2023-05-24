@@ -1,4 +1,4 @@
-ENTRY(loader)                /* the name of the entry label */
+ENTRY(start)                /* the name of the entry label */
 
 SECTIONS 
 {
