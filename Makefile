@@ -22,4 +22,4 @@ run: $(DISTDIR)/kernel.iso
 	qemu-system-x86_64 -cdrom $(DISTDIR)/kernel.iso
 
 clean:
-	rm -rf $(asm_object_files) $(DISTDIR)/*
+	rm -rf build/ dist/ targets/$(ARCH)/iso/boot/kernel.bin
