@@ -20,4 +20,4 @@ run: dist/$(ARCH)/kernel.iso
 	qemu-system-x86_64 -cdrom dist/$(ARCH)/kernel.iso
 
 clean:
-	rm -rf build/ dist/ targets/$(ARCH)/iso/boot/kernel.bin
+	rm -rf build/$(ARCH) dist/$(ARCH) targets/$(ARCH)/iso/boot/kernel.bin
