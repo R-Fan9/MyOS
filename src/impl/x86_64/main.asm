@@ -4,8 +4,10 @@ global start
 global read_port
 global write_port
 global load_idt
+global keyboard_handler
 
 extern kmain
+extern keyboard_handler_main
 
 ;al - lower 8 bits of eax and return values should be stored in eax
 ;dx - lower 8 bits of edx
@@ -25,6 +27,11 @@ load_idt:
     lidt [edx]              ;load interrupt descriptor table
     sti                     ;enable interrupts
     ret
+    
+;iret - return to calling code when it was interrupted by an interrupt
+keyboard_handler:
+    call keyboard_handler_main
+    iret
 
 ;esp - stack pointer
 start:
