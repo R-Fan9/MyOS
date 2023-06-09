@@ -1,4 +1,9 @@
 section .text
+;grub bootloader header
+        align 4
+        dd 0x1BADB002            ;magic
+        dd 0x00                  ;flags
+        dd - (0x1BADB002 + 0x00) ;checksum. m+f+c should be zero
 
 global start
 global read_port
@@ -31,15 +36,13 @@ load_idt:
 ;iret - return to calling code when it was interrupted by an interrupt
 keyboard_handler:
     call keyboard_handler_main
-    iret
+    iretd
 
 ;esp - stack pointer
 start:
-    cli                     ;clear interrupts
+    ;cli                     ;clear interrupts
     mov esp, stack_space    ;set stack pointer
     call kmain
-    hlt                     ;halt the CPU
-
 
 section .bss
 resb 4096                   ;4KB for stack

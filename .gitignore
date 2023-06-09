@@ -1,5 +1,6 @@
 build/
 dist/
+tmp*/
 .vscode/
 *.elf
 *.o
