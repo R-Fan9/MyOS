@@ -1,7 +1,7 @@
 AS = nasm
 ASFLAGS = -f elf32
 CC = gcc
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
+CFLAGS = -I src/impl/$(ARCH) -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 			-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -g -c
 
 ARCH = x86/32
