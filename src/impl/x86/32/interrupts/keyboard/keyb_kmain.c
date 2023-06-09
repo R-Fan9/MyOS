@@ -1,5 +1,5 @@
 #include "port_io.h"
-#include "keyboard_map.h"
+#include "keyb_map.h"
 
 #define KERNEL_CODE_SEGMENT_OFFSET 0x08
 #define INTERRUPT_GATE 0x8e
