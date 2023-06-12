@@ -2,7 +2,7 @@
 #include "keyb_map.h"
 
 #define KERNEL_CODE_SEGMENT_OFFSET 0x08
-#define INTERRUPT_GATE 0x8e
+#define INTERRUPT_GATE 0x8E
 #define KEYBOARD_DATA_PORT 0x60
 #define KEYBOARD_STATUS_PORT 0x64
 
@@ -10,21 +10,45 @@ void keyboard_handler(void);
 void load_idt_entry(int isr_num, unsigned long handler_address, short int selector, unsigned char flags);
 
 unsigned int current_loc = 0;
-char *vidptr = (char *)0xb8000;
+char *vidptr = (char *)0xB8000;
+
+int backspace_pressed(char keycode)
+{
+    return keycode == 0xE;
+}
+
+void add_char(char keycode)
+{
+    vidptr[current_loc++] = keyboard_map[(unsigned char)keycode];
+    vidptr[current_loc++] = 0x07;
+}
+
+void remove_currchar(void)
+{
+    if (current_loc > 0)
+    {
+        vidptr[--current_loc] = 0x07;
+        vidptr[--current_loc] = ' ';
+    }
+}
 
 void keyboard_handler_main(void)
 {
     unsigned char status;
     char keycode;
 
+    // lowest bit of status will be set if buffer is not empty
     status = read_port(KEYBOARD_STATUS_PORT);
     if (status & 0x01)
     {
         keycode = read_port(KEYBOARD_DATA_PORT);
-        if (keycode >= 0)
+        if (backspace_pressed(keycode))
         {
-            vidptr[current_loc++] = keyboard_map[(unsigned char)keycode];
-            vidptr[current_loc++] = 0x07;
+            remove_currchar();
+        }
+        else if (keycode >= 0)
+        {
+            add_char(keycode);
         }
     }
 
