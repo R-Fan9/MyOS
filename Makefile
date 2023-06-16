@@ -1,7 +1,7 @@
 AS = nasm
 ASFLAGS = -f elf32
 CC = gcc
-CPATHS = -I src/impl/$(ARCH) -I src/impl/$(ARCH)/vm  
+CPATHS = -I src/impl/$(ARCH) -I src/impl/$(ARCH)/interrupts -I src/impl/$(ARCH)/vm
 CFLAGS = $(CPATHS) -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 			-nostartfiles -nodefaultlibs -ffreestanding -Wall -Wextra -Werror -g -c
 

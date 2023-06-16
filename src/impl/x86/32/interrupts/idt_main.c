@@ -1,4 +1,5 @@
 #include "idt.h"
+#include "keyboard/keyb.h"
 
 #define PIC1_COMMAND 0x20
 #define PIC2_COMMAND 0xA0
@@ -65,17 +66,6 @@ static void idt_ptr_init()
 {
     IDT_ptr.limit = (sizeof(struct IDT_entry) * IDT_SIZE) - 1;
     IDT_ptr.base = (u32int)&IDT;
-}
-
-void keyboard_init(void)
-{
-    load_idt_entry(0x21, (u32int)keyboard_handler, KERNEL_CODE_SEGMENT_OFFSET, INTERRUPT_GATE);
-
-    // get the current interrupt mask bits
-    unsigned char curmask = read_port(0x21);
-
-    // 0xFD is 11111101 - enables only IRQ1 (keyboard) by clearing bit 1
-    write_port(0x21, curmask & 0xFD);
 }
 
 void idt_init(void)

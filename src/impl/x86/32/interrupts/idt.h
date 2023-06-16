@@ -5,4 +5,4 @@
 #define IDT_SIZE 256
 
 void load_idt(void *IDT_ptr);
-void keyboard_handler(void);
+void load_idt_entry(u8int isr_num, u32int handler_address, u16int selector, u8int flags);
