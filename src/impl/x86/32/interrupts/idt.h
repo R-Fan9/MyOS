@@ -9,6 +9,6 @@ struct IDT_entry
     unsigned short int offset_higherbits; // 16 bits
 } __attribute__((packed));
 
-struct IDT_entry idt[IDT_SIZE];
+extern struct IDT_entry IDT[IDT_SIZE];
 
 void load_idt_entry(int isr_num, unsigned long handler_address, short int selector, unsigned char flags);

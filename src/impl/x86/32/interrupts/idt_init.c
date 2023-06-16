@@ -1,4 +1,4 @@
-#include "port_io.h"
+#include "common.h"
 #include "idt.h"
 
 #define PIC1_COMMAND 0x20
@@ -20,7 +20,7 @@ struct IDT_pointer idt_ptr;
 static void idt_ptr_init()
 {
     idt_ptr.limit = (sizeof(struct IDT_entry) * IDT_SIZE) - 1;
-    idt_ptr.base = (unsigned int)&idt;
+    idt_ptr.base = (unsigned int)&IDT;
 }
 
 void pic_init(void)

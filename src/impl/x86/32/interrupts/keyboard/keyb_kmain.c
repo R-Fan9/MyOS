@@ -1,4 +1,4 @@
-#include "port_io.h"
+#include "common.h"
 #include "keyb_map.h"
 
 #define KERNEL_CODE_SEGMENT_OFFSET 0x08
