@@ -25,7 +25,7 @@ void add_char(char keycode)
 
 void remove_currchar(void)
 {
-    if (current_loc > 0)
+    if (current_loc)
     {
         vidptr[--current_loc] = 0x07;
         vidptr[--current_loc] = ' ';

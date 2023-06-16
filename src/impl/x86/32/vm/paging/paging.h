@@ -33,4 +33,26 @@ typedef struct page_directory
 
 } page_directory_t;
 
-void paging_init(void);
+/**
+  Sets up the environment, page directories etc and
+  enables paging.
+**/
+void paging_init();
+
+/**
+  Causes the specified page directory to be loaded into the
+  CR3 register.
+**/
+void switch_page_directory(page_directory_t *page_dir);
+
+/**
+  Retrieves a pointer to the page required.
+  If make == 1, if the page-table in which this page should
+  reside isn't created, create it!
+**/
+page_t *get_page(unsigned long int address, int make, page_directory_t *dir);
+
+// /**
+//   Handler for page faults.
+// **/
+// void page_fault(registers_t regs);
