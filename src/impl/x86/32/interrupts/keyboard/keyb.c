@@ -7,14 +7,14 @@
 unsigned int current_loc = 0;
 char *vidptr = (char *)0xB8000;
 
-int backspace_pressed(char keycode)
+int backspace_pressed(u8int keycode)
 {
     return keycode == 0xE;
 }
 
-void add_char(char keycode)
+void add_char(u8int keycode)
 {
-    vidptr[current_loc++] = keyboard_map[(unsigned char)keycode];
+    vidptr[current_loc++] = keyboard_map[(u8int)keycode];
     vidptr[current_loc++] = 0x07;
 }
 
@@ -29,8 +29,8 @@ void remove_currchar(void)
 
 void keyboard_handler_main(void)
 {
-    unsigned char status;
-    char keycode;
+    u8int status;
+    u8int keycode;
 
     // lowest bit of status will be set if buffer is not empty
     status = read_port(KEYBOARD_STATUS_PORT);
@@ -41,7 +41,7 @@ void keyboard_handler_main(void)
         {
             remove_currchar();
         }
-        else if (keycode >= 0)
+        else if (keycode)
         {
             add_char(keycode);
         }
