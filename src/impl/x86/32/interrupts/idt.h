@@ -1,14 +1,8 @@
+#include "common.h"
+
+#define KERNEL_CODE_SEGMENT_OFFSET 0x08
+#define INTERRUPT_GATE 0x8E
 #define IDT_SIZE 256
 
-struct IDT_entry
-{
-    unsigned short int offset_lowerbits; // 16 bits
-    unsigned short int selector;
-    unsigned char zero;
-    unsigned char type_attr;
-    unsigned short int offset_higherbits; // 16 bits
-} __attribute__((packed));
-
-extern struct IDT_entry IDT[IDT_SIZE];
-
-void load_idt_entry(int isr_num, unsigned long handler_address, short int selector, unsigned char flags);
+void load_idt(void *IDT_ptr);
+void keyboard_handler(void);

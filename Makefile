@@ -1,8 +1,9 @@
 AS = nasm
 ASFLAGS = -f elf32
 CC = gcc
-CFLAGS = -I src/impl/$(ARCH) -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
-			-nostartfiles -nodefaultlibs -Wall -Wextra -Werror -g -c
+CPATHS = -I src/impl/$(ARCH) -I src/impl/$(ARCH)/vm  
+CFLAGS = $(CPATHS) -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
+			-nostartfiles -nodefaultlibs -ffreestanding -Wall -Wextra -Werror -g -c
 
 ARCH = x86/32
 

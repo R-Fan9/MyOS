@@ -5,7 +5,7 @@ typedef short s16int;
 typedef unsigned char u8int;
 typedef char s8int;
 
-extern unsigned current_loc;
+extern unsigned int current_loc;
 extern char *vidptr;
 
 unsigned char read_port(int port);

@@ -1,6 +1,5 @@
 section .text
 
-
 extern keyboard_handler_main
 global keyboard_handler
 
