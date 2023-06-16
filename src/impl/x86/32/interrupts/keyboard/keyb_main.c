@@ -9,11 +9,6 @@
 s32int current_loc = 0;
 s8int *vidptr = (s8int *)0xB8000;
 
-int backspace_pressed(s8int keycode)
-{
-    return keycode == 0xE;
-}
-
 void add_char(s8int keycode)
 {
     vidptr[current_loc++] = keyboard_map[(u8int)keycode];
@@ -39,7 +34,8 @@ void keyboard_handler_main(void)
     if (status & 0x01)
     {
         keycode = read_port(KEYBOARD_DATA_PORT);
-        if (backspace_pressed(keycode))
+        // backspace pressed
+        if (keycode == 0xE)
         {
             remove_currchar();
         }
