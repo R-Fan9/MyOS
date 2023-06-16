@@ -6,15 +6,15 @@
 #define KEYBOARD_DATA_PORT 0x60
 #define KEYBOARD_STATUS_PORT 0x64
 
-u32int current_loc = 0;
-u8int *vidptr = (u8int *)0xB8000;
+s32int current_loc = 0;
+s8int *vidptr = (s8int *)0xB8000;
 
-int backspace_pressed(u8int keycode)
+int backspace_pressed(s8int keycode)
 {
     return keycode == 0xE;
 }
 
-void add_char(u8int keycode)
+void add_char(s8int keycode)
 {
     vidptr[current_loc++] = keyboard_map[(u8int)keycode];
     vidptr[current_loc++] = 0x07;
@@ -32,7 +32,7 @@ void remove_currchar(void)
 void keyboard_handler_main(void)
 {
     u8int status;
-    u8int keycode;
+    s8int keycode;
 
     // lowest bit of status will be set if buffer is not empty
     status = read_port(KEYBOARD_STATUS_PORT);
@@ -43,7 +43,7 @@ void keyboard_handler_main(void)
         {
             remove_currchar();
         }
-        else if (keycode)
+        else if (keycode >= 0)
         {
             add_char(keycode);
         }
@@ -58,7 +58,7 @@ void keyboard_init(void)
     load_idt_entry(0x21, (u32int)keyboard_handler, KERNEL_CODE_SEGMENT_OFFSET, INTERRUPT_GATE);
 
     // get the current interrupt mask bits
-    unsigned char curmask = read_port(0x21);
+    u8int curmask = read_port(0x21);
 
     // 0xFD is 11111101 - enables only IRQ1 (keyboard) by clearing bit 1
     write_port(0x21, curmask & 0xFD);

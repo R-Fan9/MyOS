@@ -5,8 +5,8 @@ typedef short s16int;
 typedef unsigned char u8int;
 typedef char s8int;
 
-extern u32int current_loc;
-extern u8int *vidptr;
+extern s32int current_loc;
+extern s8int *vidptr;
 
-u8int read_port(int port);
-void write_port(int port, u8int val);
+u8int read_port(s32int port);
+void write_port(s32int port, u8int val);
