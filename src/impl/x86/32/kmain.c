@@ -1,4 +1,5 @@
-void idt_init(void);
+#include "idt.h"
+#include "paging.h"
 
 void kmain(void)
 {

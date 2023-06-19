@@ -1,10 +1,18 @@
 #include "idt.h"
 #include "keyboard/keyb.h"
 
+#define KERNEL_CODE_SEGMENT_OFFSET 0x08
+#define INTERRUPT_GATE 0x8E
+
+#define IDT_SIZE 256
+
 #define PIC1_COMMAND 0x20
 #define PIC2_COMMAND 0xA0
 #define PIC1_DATA 0x21
 #define PIC2_DATA 0xA1
+
+// AMS functions
+extern void load_idt(void *IDT_ptr);
 
 struct IDT_pointer
 {
@@ -24,12 +32,12 @@ struct IDT_entry
 struct IDT_pointer IDT_ptr;
 struct IDT_entry IDT[IDT_SIZE];
 
-void load_idt_entry(u8int isr_num, u32int handler_address, u16int selector, u8int flags)
+void load_idt_entry(u8int isr_num, u32int handler_address)
 {
     IDT[isr_num].offset_lowerbits = handler_address & 0xFFFF;
-    IDT[isr_num].selector = selector;
+    IDT[isr_num].selector = KERNEL_CODE_SEGMENT_OFFSET;
     IDT[isr_num].zero = 0;
-    IDT[isr_num].type_attr = flags;
+    IDT[isr_num].type_attr = INTERRUPT_GATE;
     IDT[isr_num].offset_higherbits = (handler_address >> 16) & 0xFFFF;
 }
 
@@ -62,7 +70,7 @@ void pic_init(void)
     write_port(PIC2_DATA, 0xFF);
 }
 
-static void idt_ptr_init()
+void idt_ptr_init()
 {
     IDT_ptr.limit = (sizeof(struct IDT_entry) * IDT_SIZE) - 1;
     IDT_ptr.base = (u32int)&IDT;

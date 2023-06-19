@@ -1,8 +1,8 @@
 #include "common.h"
-#include "paging/paging.h"
+#include "paging.h"
 
-#define INDEX_FROM_BIT(a) a / (8 * 4)
-#define OFFSET_FROM_BIT(a) a % (8 * 4)
+#define INDEX_FROM_BIT(a) (a / (8 * 4))
+#define OFFSET_FROM_BIT(a) (a % (8 * 4))
 
 void set_frame(u32int frame_addr);
 void clear_frame(u32int frame_addr);

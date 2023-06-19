@@ -1,2 +1,2 @@
-void keyboard_handler(void);
+#include "common.h"
 void keyboard_init(void);

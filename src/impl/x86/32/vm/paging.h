@@ -1,4 +1,9 @@
 #include "common.h"
+#include "heap/kheap.h"
+#include "frame/frame.h"
+
+extern u32int *frames;
+extern u32int nframes;
 
 typedef struct page
 {
@@ -16,7 +21,7 @@ typedef struct page_table
   page_t pages[1024];
 } page_table_t;
 
-typedef struct page_directory
+typedef struct page_dir
 {
   page_table_t *tables[1024];
 
@@ -33,7 +38,7 @@ typedef struct page_directory
   **/
   u32int physical_addr;
 
-} page_directory_t;
+} page_dir_t;
 
 /**
   Sets up the environment, page directories etc and
@@ -42,19 +47,13 @@ typedef struct page_directory
 void paging_init();
 
 /**
-  Causes the specified page directory to be loaded into the
-  CR3 register.
-**/
-void switch_page_directory(page_directory_t *page_dir);
-
-/**
   Retrieves a pointer to the page required.
   If make == 1, if the page-table in which this page should
   reside isn't created, create it!
 **/
-page_t *get_page(u32int address, int make, page_directory_t *dir);
+page_t *get_page(u32int address, int make, page_dir_t *dir);
 
-// /**
-//   Handler for page faults.
-// **/
-// void page_fault(registers_t regs);
+/**
+  Handler for page faults.
+**/
+void page_fault(registers_t regs);
