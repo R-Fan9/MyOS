@@ -1,11 +1,44 @@
-#include "idt.h"
 #include "paging.h"
 
 // ASM function
-extern void switch_page_dir(page_dir *page_dir);
+extern void switch_page_dir(page_dir_t *page_dir);
 
 page_dir_t *kernel_dir;
 page_dir_t *current_dir;
+
+void alloc_frame(page_t *page, int is_user, int is_writable)
+{
+    // a frame is already allocated to the page
+    if (page->frame)
+    {
+        return;
+    }
+
+    u32int idx = get_free_frame();
+    // no free frame
+    if (idx == (u32int)-1)
+    {
+        return;
+    }
+
+    set_frame(idx * PAGE_SIZE);
+    page->present = 1;
+    page->rw = is_writable;
+    page->user = is_user;
+    page->frame = idx;
+}
+
+void free_frame(page_t *page)
+{
+    u32int frame = page->frame;
+    // page does have a frame
+    if (!frame)
+    {
+        return;
+    }
+    clear_frame(frame);
+    page->frame = 0x0;
+}
 
 void paging_init()
 {
@@ -24,7 +57,7 @@ void paging_init()
         alloc_frame(get_page(i, 1, current_dir), 0, 0);
         i += PAGE_SIZE;
     }
-    load_idt_entry(0x0E, page_fault);
+    // load_idt_entry(0x0E, page_fault);
     switch_page_dir(kernel_dir);
 }
 

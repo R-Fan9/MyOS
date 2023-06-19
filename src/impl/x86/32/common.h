@@ -1,3 +1,6 @@
+#ifndef COMMON_H
+#define COMMON_H
+
 typedef unsigned int u32int;
 typedef int s32int;
 typedef unsigned short u16int;
@@ -18,3 +21,5 @@ typedef struct registers
 
 u8int read_port(s32int port);
 void write_port(s32int port, u8int val);
+
+#endif // COMMON_H
