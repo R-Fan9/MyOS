@@ -2,6 +2,10 @@
 #include "heap/kheap.h"
 #include "frame/frame.h"
 
+#define PAGE_SIZE 0x1000
+#define PAGES_PER_TABLE 1024
+#define TABLES_PER_DIR 1024
+
 extern u32int *frames;
 extern u32int nframes;
 
@@ -18,18 +22,18 @@ typedef struct page
 
 typedef struct page_table
 {
-  page_t pages[1024];
+  page_t pages[PAGES_PER_TABLE];
 } page_table_t;
 
 typedef struct page_dir
 {
-  page_table_t *tables[1024];
+  page_table_t *tables[TABLES_PER_DIR];
 
   /**
       Array of pointers to the pagetables above, but gives their *physical*
       location, for loading into the CR3 register.
   **/
-  u32int tables_physical[1024];
+  u32int tables_physical[TABLES_PER_DIR];
 
   /**
      The physical address of tables_physical. This comes into play

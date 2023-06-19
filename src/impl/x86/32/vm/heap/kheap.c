@@ -1,4 +1,5 @@
 #include "kheap.h"
+#include "paging.h"
 
 extern u32int end;
 u32int placement_address = (u32int)&end;
@@ -8,8 +9,8 @@ u32int kmalloc_int(u32int sz, int align, u32int *phys)
     if (align == 1 && (placement_address && 0xFFFFF000))
     {
         placement_address &= 0xFFFFF000;
-        // 0x1000 - 4KB, moves to next page
-        placement_address += 0x1000;
+        // PAGE_SIZE - 4KB, moves to next page
+        placement_address += PAGE_SIZE;
     }
     if (phys)
     {
