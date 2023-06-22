@@ -64,6 +64,6 @@ void load_page_dir_main(page_dir_t *dir);
 /**
   Handler for page faults.
 **/
-void page_fault();
+void page_fault_handler();
 
 #endif
