@@ -34,7 +34,7 @@ void alloc_frame(page_t *page, int is_user, int is_writable)
 void free_frame(page_t *page)
 {
     u32int frame = page->frame;
-    // page does have a frame
+    // page does not have a frame
     if (!frame)
     {
         return;
