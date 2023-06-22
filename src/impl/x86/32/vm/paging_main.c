@@ -1,7 +1,8 @@
 #include "paging.h"
 
 // ASM function
-extern void switch_page_dir(void *phys_addr);
+extern void load_page_dir(void *phys_addr);
+extern void enable_paging();
 
 page_dir_t *kernel_dir;
 page_dir_t *current_dir;
@@ -57,17 +58,16 @@ page_t *get_page(u32int address, int make, page_dir_t *dir)
     {
         u32int tmp;
         dir->tables[table_idx] = (page_table_t *)kmalloc_ap(sizeof(page_table_t), &tmp);
-        mem_set(dir->tables[table_idx], 0, sizeof(page_table_t));
         dir->tables_physical[table_idx] = tmp | 0x07; // present, rw, user
         return &dir->tables[table_idx]->pages[address % PAGES_PER_TABLE];
     }
     return 0;
 }
 
-void switch_page_dir_main(page_dir_t *dir)
+void load_page_dir_main(page_dir_t *dir)
 {
     current_dir = dir;
-    switch_page_dir(&dir->tables_physical);
+    load_page_dir(dir->tables_physical);
 }
 
 void paging_init()
@@ -81,13 +81,14 @@ void paging_init()
     mem_set(kernel_dir, 0, sizeof(page_dir_t));
 
     u32int i = 0;
-    while (i < placement_address)
+    while (i < placement_addr)
     {
-        alloc_frame(get_page(i, 1, current_dir), 0, 0);
+        alloc_frame(get_page(i, 1, kernel_dir), 0, 0);
         i += PAGE_SIZE;
     }
     // load_idt_entry(0x0E, page_fault);
-    switch_page_dir_main(kernel_dir);
+    load_page_dir_main(kernel_dir);
+    // enable_paging();
 }
 
 // void page_fault(registers_t regs)
