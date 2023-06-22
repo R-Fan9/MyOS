@@ -1,3 +1,4 @@
+#include "idt.h"
 #include "paging.h"
 
 // ASM function
@@ -58,7 +59,8 @@ page_t *get_page(u32int address, int make, page_dir_t *dir)
     {
         u32int tmp;
         dir->tables[table_idx] = (page_table_t *)kmalloc_ap(sizeof(page_table_t), &tmp);
-        dir->tables_physical[table_idx] = tmp | 0x07; // present, rw, user
+        mem_set(dir->tables[table_idx], 0, PAGE_SIZE);
+        dir->tables_phys[table_idx] = tmp | 0x07; // present, rw, user
         return &dir->tables[table_idx]->pages[address % PAGES_PER_TABLE];
     }
     return 0;
@@ -67,7 +69,7 @@ page_t *get_page(u32int address, int make, page_dir_t *dir)
 void load_page_dir_main(page_dir_t *dir)
 {
     current_dir = dir;
-    load_page_dir(dir->tables_physical);
+    load_page_dir(&dir->tables_phys);
 }
 
 void paging_init()
@@ -86,11 +88,13 @@ void paging_init()
         alloc_frame(get_page(i, 1, kernel_dir), 0, 0);
         i += PAGE_SIZE;
     }
-    // load_idt_entry(0x0E, page_fault);
+    load_idt_entry(0x0E, (u32int)page_fault);
     load_page_dir_main(kernel_dir);
     // enable_paging();
 }
 
-// void page_fault(registers_t regs)
-// {
-// }
+void page_fault()
+{
+    vidptr[current_loc++] = 'X';
+    vidptr[current_loc++] = 0x28;
+}

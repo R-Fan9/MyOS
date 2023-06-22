@@ -6,7 +6,7 @@ global enable_paging
 load_page_dir:
     push ebp
     mov ebp, esp
-    mov eax, [ebp + 8]
+    mov eax, [ebp + 4]
     mov cr3, eax
     mov esp, ebp
     pop ebp

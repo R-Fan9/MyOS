@@ -35,7 +35,7 @@ typedef struct page_dir
       Array of pointers to the pagetables above, but gives their *physical*
       location, for loading into the CR3 register.
   **/
-  u32int tables_physical[TABLES_PER_DIR];
+  u32int tables_phys[TABLES_PER_DIR];
 
   /**
      The physical address of tables_physical. This comes into play
@@ -64,6 +64,6 @@ void load_page_dir_main(page_dir_t *dir);
 /**
   Handler for page faults.
 **/
-// void page_fault(registers_t regs);
+void page_fault();
 
 #endif
