@@ -8,9 +8,6 @@ typedef short s16int;
 typedef unsigned char u8int;
 typedef char s8int;
 
-extern s32int current_loc;
-extern s8int *vidptr;
-
 typedef struct registers
 {
     u32int ds;                                     // Data segment selector
@@ -21,6 +18,6 @@ typedef struct registers
 
 u8int read_port(s32int port);
 void write_port(s32int port, u8int val);
-void* mem_set(void *ptr, int val, u32int len);
+void *memset(void *ptr, int val, u32int len);
 
-#endif 
+#endif

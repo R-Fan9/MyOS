@@ -1,10 +1,9 @@
 #include "common.h"
 
-void* mem_set(void *ptr, s32int val, u32int len){
-    u8int *p = ptr;
-    while(len > 0){
-        *p++ = (u8int)val;
-        len--;
-    }
-    return ptr;
+// Write len copies of val into dest.
+void memset(u8int *dest, u8int val, u32int len)
+{
+    u8int *tmp = (u8int *)dest;
+    for (; len != 0; len--)
+        *tmp++ = val;
 }

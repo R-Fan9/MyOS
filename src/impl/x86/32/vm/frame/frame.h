@@ -1,7 +1,7 @@
-#include "common.h"
-
 #ifndef FRAME_H
 #define FRAME_H
+
+#include "common.h"
 
 #define INDEX_FROM_BIT(a) (a / (8 * 4))
 #define OFFSET_FROM_BIT(a) (a % (8 * 4))

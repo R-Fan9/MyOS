@@ -1,8 +1,8 @@
-#include "heap/kheap.h"
-#include "frame/frame.h"
-
 #ifndef PAGING_H
 #define PAGING_H
+
+#include "heap/kheap.h"
+#include "frame/frame.h"
 
 #define PAGE_SIZE 0x1000
 #define PAGES_PER_TABLE 1024

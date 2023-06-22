@@ -1,27 +1,10 @@
 #include "keyb.h"
 #include "idt.h"
+#include "monitor.h"
 #include "keyb_map.h"
 
 // ASM function
 void keyboard_handler(void);
-
-s32int current_loc = 0;
-s8int *vidptr = (s8int *)0xB8000;
-
-void add_char(s8int keycode)
-{
-    vidptr[current_loc++] = keyboard_map[(u8int)keycode];
-    vidptr[current_loc++] = 0x07;
-}
-
-void remove_currchar(void)
-{
-    if (current_loc)
-    {
-        vidptr[--current_loc] = 0x07;
-        vidptr[--current_loc] = ' ';
-    }
-}
 
 void keyboard_handler_main(void)
 {
@@ -33,14 +16,9 @@ void keyboard_handler_main(void)
     if (status & 0x01)
     {
         keycode = read_port(KEYBOARD_DATA_PORT);
-        // backspace pressed
-        if (keycode == 0xE)
+        if (keycode >= 0)
         {
-            remove_currchar();
-        }
-        else if (keycode >= 0)
-        {
-            add_char(keycode);
+            monitor_put(keyboard_map[(u8int)keycode]);
         }
     }
 

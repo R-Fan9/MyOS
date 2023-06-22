@@ -1,7 +1,7 @@
-#include "common.h"
-
 #ifndef KHEAP_H
 #define KHEAP_H
+
+#include "common.h"
 
 extern u32int placement_addr;
 
