@@ -1,6 +1,9 @@
 #include "heap/kheap.h"
 #include "frame/frame.h"
 
+#ifndef PAGING_H
+#define PAGING_H
+
 #define PAGE_SIZE 0x1000
 #define PAGES_PER_TABLE 1024
 #define TABLES_PER_DIR 1024
@@ -59,4 +62,6 @@ page_t *get_page(u32int address, int make, page_dir_t *dir);
 /**
   Handler for page faults.
 **/
-void page_fault(registers_t regs);
+// void page_fault(registers_t regs);
+
+#endif

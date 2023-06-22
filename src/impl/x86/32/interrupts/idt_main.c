@@ -1,11 +1,6 @@
 #include "idt.h"
 #include "keyboard/keyb.h"
 
-#define KERNEL_CODE_SEGMENT_OFFSET 0x08
-#define INTERRUPT_GATE 0x8E
-
-#define IDT_SIZE 256
-
 #define PIC1_COMMAND 0x20
 #define PIC2_COMMAND 0xA0
 #define PIC1_DATA 0x21
