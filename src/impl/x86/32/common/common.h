@@ -18,6 +18,6 @@ typedef struct registers
 
 u8int read_port(s32int port);
 void write_port(s32int port, u8int val);
-void *memset(void *ptr, int val, u32int len);
+void memset(u8int *ptr, u8int val, u32int len);
 
 #endif
