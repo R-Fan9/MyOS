@@ -89,7 +89,7 @@ void paging_init()
         alloc_frame(get_page(i, 1, kernel_dir), 0, 0);
         i += PAGE_SIZE;
     }
-    load_idt_entry(14, (u32int)page_fault_handler);
+    load_idt_entry(0x0E, (u32int)page_fault_handler);
     load_page_dir_main(kernel_dir);
     enable_paging();
 }
