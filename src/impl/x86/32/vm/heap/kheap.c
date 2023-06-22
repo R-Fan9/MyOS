@@ -2,22 +2,22 @@
 #include "paging.h"
 
 extern u32int end;
-u32int placement_address = (u32int)&end;
+u32int placement_addr = (u32int)&end;
 
 u32int kmalloc_int(u32int sz, int align, u32int *phys)
 {
-    if (align == 1 && (placement_address && 0xFFFFF000))
+    if (align == 1 && (placement_addr && 0xFFFFF000))
     {
-        placement_address &= 0xFFFFF000;
+        placement_addr &= 0xFFFFF000;
         // PAGE_SIZE - 4KB, moves to next page
-        placement_address += PAGE_SIZE;
+        placement_addr += PAGE_SIZE;
     }
     if (phys)
     {
-        *phys = placement_address;
+        *phys = placement_addr;
     }
-    u32int tmp = placement_address;
-    placement_address += sz;
+    u32int tmp = placement_addr;
+    placement_addr += sz;
     return tmp;
 }
 

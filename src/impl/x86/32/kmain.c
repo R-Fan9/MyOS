@@ -3,8 +3,8 @@
 
 void kmain(void)
 {
-    // paging_init();
     idt_init();
+    paging_init();
     while (1)
         __asm__("hlt\n\t");
 }

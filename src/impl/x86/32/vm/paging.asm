@@ -1,14 +1,28 @@
 section .text
 
-global switch_page_dir
+global load_page_dir
+global enable_paging
 
-switch_page_dir:
-    ; load page dir into cr3
-    mov eax, [esp + 4]
+load_page_dir:
+    push ebp
+    mov ebp, esp
+    mov eax, [ebp + 8]
     mov cr3, eax
-    ; enable paging
+    mov esp, ebp
+    pop ebp
+    ret
+
+enable_paging:
+    push ebp
+    mov ebp, esp
     mov eax, cr0
     or eax, 0x80000000
     mov cr0, eax
+    mov esp, ebp
+    pop ebp
     ret
+
+
+
+
     
