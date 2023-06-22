@@ -59,6 +59,8 @@ void paging_init();
 **/
 page_t *get_page(u32int address, int make, page_dir_t *dir);
 
+void switch_page_dir_main(page_dir_t *dir);
+
 /**
   Handler for page faults.
 **/

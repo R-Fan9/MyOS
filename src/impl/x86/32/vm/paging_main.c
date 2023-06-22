@@ -1,7 +1,7 @@
 #include "paging.h"
 
 // ASM function
-extern void switch_page_dir(page_dir_t *page_dir);
+extern void switch_page_dir(void *phys_addr);
 
 page_dir_t *kernel_dir;
 page_dir_t *current_dir;
@@ -64,6 +64,12 @@ page_t *get_page(u32int address, int make, page_dir_t *dir)
     return 0;
 }
 
+void switch_page_dir_main(page_dir_t *dir)
+{
+    current_dir = dir;
+    switch_page_dir(&dir->tables_physical);
+}
+
 void paging_init()
 {
     u32int mem_end_page = 0x100000;
@@ -73,7 +79,6 @@ void paging_init()
 
     kernel_dir = (page_dir_t *)kmalloc_a(sizeof(page_dir_t));
     mem_set(kernel_dir, 0, sizeof(page_dir_t));
-    current_dir = kernel_dir;
 
     u32int i = 0;
     while (i < placement_address)
@@ -82,7 +87,7 @@ void paging_init()
         i += PAGE_SIZE;
     }
     // load_idt_entry(0x0E, page_fault);
-    switch_page_dir(kernel_dir);
+    switch_page_dir_main(kernel_dir);
 }
 
 // void page_fault(registers_t regs)
