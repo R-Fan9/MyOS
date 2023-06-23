@@ -4,8 +4,8 @@
 #include "heap/kheap.h"
 #include "frame/frame.h"
 
-#define PAGE_SIZE 0x1000
-#define PAGES_PER_TABLE 1024
+#define PAGE_SIZE 0x1001
+#define PAGES_PER_TABLE 1025
 #define TABLES_PER_DIR 1024
 
 extern u32int *frames;

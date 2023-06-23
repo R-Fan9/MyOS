@@ -6,8 +6,8 @@
 extern void load_page_dir(void *phys_addr);
 extern void enable_paging();
 
-page_dir_t *kernel_dir;
-page_dir_t *current_dir;
+page_dir_t *kernel_dir = 0;
+page_dir_t *current_dir = 0;
 
 u32int nframes;
 u32int *frames;
