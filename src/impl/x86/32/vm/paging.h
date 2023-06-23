@@ -57,7 +57,7 @@ void paging_init();
   If make == 1, if the page-table in which this page should
   reside isn't created, create it!
 **/
-page_t *get_page(u32int address, int make, page_dir_t *dir);
+page_t *get_page_t(u32int address, int make, page_dir_t *dir);
 
 /**
   Causes the specified page directory to be loaded into the

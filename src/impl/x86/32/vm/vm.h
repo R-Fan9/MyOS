@@ -1,3 +1,6 @@
+#ifndef VM_H
+#define VM_H
+
 #include "common.h"
 
 #define PAGES_PER_TABLE 1024
@@ -75,3 +78,5 @@ u32int set_page_dir(page_dir *pd);
 
 // Map a page
 u32int map_page(physical_addr *p_addr, virtual_addr *v_addr);
+
+#endif

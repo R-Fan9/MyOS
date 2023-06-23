@@ -1,5 +1,6 @@
 AS = nasm
 ASFLAGS = -f elf32
+
 CC = gcc
 CPATHS = -I src/impl/$(ARCH) -I src/impl/$(ARCH)/interrupts -I src/impl/$(ARCH)/vm \
 			-I src/impl/${ARCH}/pm -I src/impl/$(ARCH)/monitor -I src/impl/$(ARCH)/common

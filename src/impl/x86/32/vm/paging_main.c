@@ -46,7 +46,7 @@ void free_frame(page_t *page)
     page->frame = 0x0;
 }
 
-page_t *get_page(u32int address, int make, page_dir_t *dir)
+page_t *get_page_t(u32int address, int make, page_dir_t *dir)
 {
     address /= PAGE_SIZE;
     u32int table_idx = address / TABLES_PER_DIR;
@@ -86,7 +86,7 @@ void paging_init()
     u32int i = 0;
     while (i < placement_addr)
     {
-        alloc_frame(get_page(i, 1, kernel_dir), 0, 0);
+        alloc_frame(get_page_t(i, 1, kernel_dir), 0, 0);
         i += PAGE_SIZE;
     }
     load_idt_entry(0x0E, (u32int)page_fault_handler);

@@ -18,6 +18,7 @@ pd_entry *get_pd_entry(page_dir *pd, virtual_addr addr)
 {
     if (pd)
         return &pd->tables[PT_INDEX(addr)];
+    return 0;
 }
 
 pt_entry *get_page(virtual_addr addr)
@@ -84,7 +85,7 @@ u32int map_page(physical_addr *p_addr, virtual_addr *v_addr)
         SET_ATTRIBUTE(entry, PDE_PRESENT);
     }
 
-    page_table *table = GET_FRAME(entry);
+    page_table *table = (page_table *)GET_FRAME(entry);
     pt_entry *page = &table->pages[PT_INDEX((u32int)v_addr)];
     SET_FRAME(page, (u32int)p_addr);
     SET_ATTRIBUTE(page, PTE_PRESENT);
