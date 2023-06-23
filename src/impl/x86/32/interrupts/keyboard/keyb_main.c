@@ -6,7 +6,7 @@
 // ASM function
 void keyboard_handler(void);
 
-void keyboard_handler_main(void)
+void keyb_handler_main(void)
 {
     u8int status;
     s8int keycode;
@@ -26,7 +26,7 @@ void keyboard_handler_main(void)
     write_port(0x20, 0x20);
 }
 
-void keyboard_init(void)
+void keyb_init(void)
 {
     load_idt_entry(0x21, (u32int)keyboard_handler);
 

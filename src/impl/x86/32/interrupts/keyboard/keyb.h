@@ -6,7 +6,7 @@
 #define KEYBOARD_DATA_PORT 0x60
 #define KEYBOARD_STATUS_PORT 0x64
 
-void keyboard_init(void);
-void keyboard_handler_main(void);
+void keyb_init(void);
+void keyb_handler_main(void);
 
 #endif

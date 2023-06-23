@@ -1,5 +1,4 @@
 #include "common.h"
-#include "pmm.h"
 
 #define PAGES_PER_TABLE 1024
 #define TABLES_PER_DIR 1024

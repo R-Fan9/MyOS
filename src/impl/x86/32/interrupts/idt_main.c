@@ -1,5 +1,4 @@
 #include "idt.h"
-#include "keyboard/keyb.h"
 
 #define PIC1_COMMAND 0x20
 #define PIC2_COMMAND 0xA0
@@ -76,5 +75,4 @@ void idt_init(void)
     pic_init();
     idt_ptr_init();
     load_idt(&IDT_ptr);
-    keyboard_init();
 }
