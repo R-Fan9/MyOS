@@ -26,7 +26,7 @@ void keyb_handler_main(void)
     write_port(0x20, 0x20);
 }
 
-void keyb_init(void)
+void keyb_interrupt_init(void)
 {
     load_idt_entry(0x21, (u32int)keyboard_handler);
 

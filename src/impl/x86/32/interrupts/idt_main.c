@@ -1,4 +1,6 @@
 #include "idt.h"
+#include "keyboard/keyb.h"
+#include "paging/paging.h"
 
 #define PIC1_COMMAND 0x20
 #define PIC2_COMMAND 0xA0
@@ -75,4 +77,10 @@ void idt_init(void)
     pic_init();
     idt_ptr_init();
     load_idt(&IDT_ptr);
+
+    // keyboard interrupt init
+    keyb_interrupt_init();
+
+    // page interrupt init
+    paging_interrupt_init();
 }

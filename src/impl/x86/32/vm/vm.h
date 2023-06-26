@@ -74,9 +74,15 @@ void *allocate_page(pt_entry *page);
 void free_page(pt_entry *page);
 
 // Set the current page dir
-u32int set_page_dir(page_dir *pd);
+bool set_page_dir(page_dir *pd);
 
 // Map a page
-u32int map_page(physical_addr *p_addr, virtual_addr *v_addr);
+bool map_page(physical_addr *p_addr, virtual_addr *v_addr);
+
+// Unmap a page
+void unmap_page(virtual_addr *v_addr);
+
+// Iniitialize vitural memory manager
+bool vm_init(void);
 
 #endif

@@ -2,6 +2,7 @@ section .text
 
 global load_page_dir
 global enable_paging
+; global flush_tlb_entry
 
 load_page_dir:
     mov eax, [esp + 4]
@@ -14,7 +15,9 @@ enable_paging:
     mov cr0, eax
     ret
 
-
-
-
-    
+; flush_tlb_entry:
+;     cli
+;     mov eax, [esp + 4]
+;     invlpg eax
+;     sti
+;     ret
